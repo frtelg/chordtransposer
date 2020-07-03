@@ -13,14 +13,30 @@ class TransposeChordServiceTest {
     private val transposeChordService: TransposeChordService = TransposeChordService()
 
     @Test
-    fun testFile() {
-        val request = TransposeChordsInFileRequest(URI("file://$dir/test.txt"), 3)
+    fun testFileNoTargetFolder() {
+        val request = TransposeChordsInFileRequest(URI("file://$dir/test.txt"), 3, null)
 
         val response = transposeChordService.transposeFile(request)
+        val responseFile = File(response.resultFile).readLines()
 
-        File(response.resultFile).readLines().forEach {s ->
-            println(s)
+        File(URI("file://$dir/expected_result.txt")).readLines().forEach {
+            responseFile.contains(it)
         }
+    }
+
+    @Test
+    fun testFileWithTargetFolder() {
+        val request = TransposeChordsInFileRequest(URI("file://$dir/test.txt"), 3, URI("file://$dir"))
+
+        val response = transposeChordService.transposeFile(request)
+        val responseFile = File(response.resultFile)
+        val responseFileLines = responseFile.readLines()
+
+        File(URI("file://$dir/expected_result.txt")).readLines().forEach {
+            responseFileLines.contains(it)
+        }
+
+        responseFile.delete()
     }
 
     @Test
@@ -28,5 +44,19 @@ class TransposeChordServiceTest {
         val response = transposeChordService.transposeSingleChord("F#", 3)
 
         assertEquals(TransposeSingleChordResponse("A"), response)
+    }
+
+    @Test
+    fun testSingleNegative() {
+        val response = transposeChordService.transposeSingleChord("A", -2)
+
+        assertEquals(TransposeSingleChordResponse("G"), response)
+    }
+
+    @Test
+    fun testSingleComplexChord() {
+        val response = transposeChordService.transposeSingleChord("Am7add13", 1)
+
+        assertEquals(TransposeSingleChordResponse("Bbm7add13"), response)
     }
 }
