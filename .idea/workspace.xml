@@ -11,11 +11,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="25e20a2b-1fc7-406a-beee-dd52fb331199" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/frtelg/chordtransposer/dto/request/TransposeChordsInTextRequest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/frtelg/chordtransposer/dto/response/TransposeChordsInTextResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/frtelg/chordtransposer/controller/chordtransposer/TransposeChordController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/frtelg/chordtransposer/controller/chordtransposer/TransposeChordController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/frtelg/chordtransposer/dto/response/TransposeChordsInFileResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/frtelg/chordtransposer/dto/response/TransposeChordsInFileResponse.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/frtelg/chordtransposer/service/TransposeChordService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/frtelg/chordtransposer/service/TransposeChordService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/frtelg/chordtransposer/service/TransposeChordServiceTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/frtelg/chordtransposer/service/TransposeChordServiceTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/expected_result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/expected_result.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/test.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,11 +76,19 @@
     <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.frtelg.chordtransposer.dto.enums" />
+      <recent name="com.frtelg.chordtransposer.dto" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.frtelg.chordtransposer.dto.response" />
+      <recent name="com.frtelg.chordtransposer.dto.request" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/test/resources" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TransposeChordServiceTest.testFileWithTargetFolder">
+  <component name="RunManager" selected="JUnit.TransposeChordServiceTest.testTransposeText">
     <configuration name="TransposeChordServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="chordtransposer" />
       <extension name="coverage">
@@ -147,7 +156,7 @@
         <option name="BSP.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TransposeChordServiceTest.testSingleComplexChord" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TransposeChordServiceTest.testTransposeText" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="chordtransposer" />
       <extension name="coverage">
         <pattern>
@@ -157,7 +166,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.frtelg.chordtransposer.service" />
       <option name="MAIN_CLASS_NAME" value="com.frtelg.chordtransposer.service.TransposeChordServiceTest" />
-      <option name="METHOD_NAME" value="testSingleComplexChord" />
+      <option name="METHOD_NAME" value="testTransposeText" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -180,11 +189,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TransposeChordServiceTest.testTransposeText" />
         <item itemvalue="JUnit.TransposeChordServiceTest.testFileWithTargetFolder" />
         <item itemvalue="JUnit.TransposeChordServiceTest.testFileNoTargetFolder" />
         <item itemvalue="JUnit.TransposeChordServiceTest" />
         <item itemvalue="JUnit.TransposeChordServiceTest.testFile" />
-        <item itemvalue="JUnit.TransposeChordServiceTest.testSingleComplexChord" />
       </list>
     </recent_temporary>
   </component>
@@ -199,7 +208,7 @@
       <option name="presentableId" value="Default" />
       <updated>1593769824579</updated>
       <workItem from="1593769826705" duration="9971000" />
-      <workItem from="1593781222041" duration="3033000" />
+      <workItem from="1593781222041" duration="3865000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1593769875789</created>
@@ -239,26 +248,30 @@
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
     <state x="1999" y="483" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.23.1440.877/1440.23.1920.1057/3360.23.1920.1057@1440.23.1920.1057" timestamp="1593770129124" />
-    <state width="1398" height="358" key="GridCell.Tab.0.bottom" timestamp="1593784204570">
+    <state x="490" y="247" width="498" height="429" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1593784378923">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="490" y="247" width="498" height="429" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.23.1440.877@0.23.1440.877" timestamp="1593784378923" />
+    <state width="1398" height="358" key="GridCell.Tab.0.bottom" timestamp="1593784423941">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1878" height="447" key="GridCell.Tab.0.bottom/0.23.1440.877/1440.23.1920.1057/3360.23.1920.1057@1440.23.1920.1057" timestamp="1593779825794" />
-    <state width="1398" height="358" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1593784204570" />
-    <state width="1398" height="358" key="GridCell.Tab.0.center" timestamp="1593784204569">
+    <state width="1398" height="358" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1593784423941" />
+    <state width="1398" height="358" key="GridCell.Tab.0.center" timestamp="1593784423940">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1878" height="447" key="GridCell.Tab.0.center/0.23.1440.877/1440.23.1920.1057/3360.23.1920.1057@1440.23.1920.1057" timestamp="1593779825793" />
-    <state width="1398" height="358" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1593784204569" />
-    <state width="1398" height="358" key="GridCell.Tab.0.left" timestamp="1593784204569">
+    <state width="1398" height="358" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1593784423940" />
+    <state width="1398" height="358" key="GridCell.Tab.0.left" timestamp="1593784423939">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1878" height="447" key="GridCell.Tab.0.left/0.23.1440.877/1440.23.1920.1057/3360.23.1920.1057@1440.23.1920.1057" timestamp="1593779825793" />
-    <state width="1398" height="358" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1593784204569" />
-    <state width="1398" height="358" key="GridCell.Tab.0.right" timestamp="1593784204570">
+    <state width="1398" height="358" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1593784423939" />
+    <state width="1398" height="358" key="GridCell.Tab.0.right" timestamp="1593784423940">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1878" height="447" key="GridCell.Tab.0.right/0.23.1440.877/1440.23.1920.1057/3360.23.1920.1057@1440.23.1920.1057" timestamp="1593779825793" />
-    <state width="1398" height="358" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1593784204570" />
+    <state width="1398" height="358" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1593784423940" />
     <state width="1878" height="290" key="GridCell.Tab.1.bottom" timestamp="1593778499770">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
@@ -275,9 +288,10 @@
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
     <state width="1878" height="290" key="GridCell.Tab.1.right/0.23.1440.877/1440.23.1920.1057/3360.23.1920.1057@1440.23.1920.1057" timestamp="1593778499769" />
-    <state x="2065" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1593773257574">
-      <screen x="1440" y="23" width="1920" height="1057" />
+    <state x="469" y="218" width="670" height="561" key="search.everywhere.popup" timestamp="1593784873652">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="2065" y="258" width="670" height="676" key="search.everywhere.popup/0.23.1440.877/1440.23.1920.1057/3360.23.1920.1057@1440.23.1920.1057" timestamp="1593773257574" />
+    <state x="469" y="218" width="670" height="561" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1593784873652" />
   </component>
 </project>

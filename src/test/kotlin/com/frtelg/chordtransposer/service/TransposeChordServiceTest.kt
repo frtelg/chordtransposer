@@ -1,6 +1,7 @@
 package com.frtelg.chordtransposer.service
 
 import com.frtelg.chordtransposer.dto.request.TransposeChordsInFileRequest
+import com.frtelg.chordtransposer.dto.request.TransposeChordsInTextRequest
 import com.frtelg.chordtransposer.dto.response.TransposeSingleChordResponse
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -11,6 +12,19 @@ class TransposeChordServiceTest {
     val dir = System.getProperty("user.dir") + "/src/test/resources"
 
     private val transposeChordService: TransposeChordService = TransposeChordService()
+
+    @Test
+    fun testTransposeText() {
+        val inputText = File(URI("file://$dir/test.txt")).readText()
+        val request = TransposeChordsInTextRequest(inputText)
+
+        val response = transposeChordService.transposeText(request, 3)
+
+        val responseContent = response.transposedText.split("\n").iterator()
+        val expectedFileContent = File(URI("file://$dir/expected_result.txt")).readLines().iterator()
+
+        responseContent.forEachRemaining{ assertTrue(expectedFileContent.next().trimEnd() == it.trimEnd()) }
+    }
 
     @Test
     fun testFileNoTargetFolder() {

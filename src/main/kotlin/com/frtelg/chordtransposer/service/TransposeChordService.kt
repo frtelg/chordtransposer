@@ -2,7 +2,9 @@ package com.frtelg.chordtransposer.service
 
 import com.frtelg.chordtransposer.dto.enums.MajorChord
 import com.frtelg.chordtransposer.dto.request.TransposeChordsInFileRequest
+import com.frtelg.chordtransposer.dto.request.TransposeChordsInTextRequest
 import com.frtelg.chordtransposer.dto.response.TransposeChordsInFileResponse
+import com.frtelg.chordtransposer.dto.response.TransposeChordsInTextResponse
 import com.frtelg.chordtransposer.dto.response.TransposeSingleChordResponse
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -40,6 +42,14 @@ class TransposeChordService {
         return TransposeChordsInFileResponse(newFile.toUri())
     }
 
+    fun transposeText(request: TransposeChordsInTextRequest, steps: Int): TransposeChordsInTextResponse {
+        val transposedText = request.text.split("\n")
+                .map { transposeLine(it, steps) }
+                .joinToString("\n")
+
+        return TransposeChordsInTextResponse(transposedText)
+    }
+
     private fun determineTargetFolder(request: TransposeChordsInFileRequest): Path {
         val requestPath = request.targetFolder?.path ?: System.getProperty("user.home")
 
@@ -47,14 +57,17 @@ class TransposeChordService {
     }
 
     private fun transposeLine(line: String, steps: Int, writer: BufferedWriter) {
-        if ("^(\\W+)?$chordRegex(\\W|\$)".toRegex().containsMatchIn(line)) {
-            writer.append(transposeChordsFromString(line, steps))
-        } else {
-            writer.append(line)
-        }
+        writer.append(transposeLine(line, steps))
 
         writer.newLine()
     }
+
+    private fun transposeLine(line:String, steps: Int): String =
+        if ("^(\\W+)?$chordRegex(\\W|\$)".toRegex().containsMatchIn(line)) {
+            transposeChordsFromString(line, steps)
+        } else {
+            line
+        }
 
     private fun transposeChordsFromString(string: String, transposeSteps: Int): String =
             string.replace(chordRegex) { r ->

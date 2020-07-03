@@ -1,6 +1,7 @@
 package com.frtelg.chordtransposer.controller.chordtransposer
 
 import com.frtelg.chordtransposer.dto.request.TransposeChordsInFileRequest
+import com.frtelg.chordtransposer.dto.request.TransposeChordsInTextRequest
 import com.frtelg.chordtransposer.dto.response.TransposeChordsInFileResponse
 import com.frtelg.chordtransposer.dto.response.TransposeSingleChordResponse
 import com.frtelg.chordtransposer.service.TransposeChordService
@@ -17,4 +18,8 @@ class TransposeChordController(val transportChordService: TransposeChordService)
     @PostMapping("/transpose")
     fun transposeFile(@RequestBody request: TransposeChordsInFileRequest): TransposeChordsInFileResponse =
             transportChordService.transposeFile(request)
+
+    @PostMapping("/transpose/{steps}")
+    fun transposeText(@PathVariable steps: Int, @RequestBody request: TransposeChordsInTextRequest) =
+            transportChordService.transposeText(request, steps)
 }
