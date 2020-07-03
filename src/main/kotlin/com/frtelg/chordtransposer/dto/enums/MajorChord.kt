@@ -1,13 +1,13 @@
-package com.frtelg.chordtransposer.dto.enum
+package com.frtelg.chordtransposer.dto.enums
 
 enum class MajorChord(val stringValue: String) {
     A("A"),
-    Bb("Bb"),
+    Bflat("Bb"),
     B("B"),
     C("C"),
     Csharp("C#"),
     D("D"),
-    Eb("Eb"),
+    Eflat("Eb"),
     E("E"),
     F("F"),
     Fsharp("F#"),

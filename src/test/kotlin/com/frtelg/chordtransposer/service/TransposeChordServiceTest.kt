@@ -2,7 +2,7 @@ package com.frtelg.chordtransposer.service
 
 import com.frtelg.chordtransposer.dto.request.TransposeChordsInFileRequest
 import com.frtelg.chordtransposer.dto.response.TransposeSingleChordResponse
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.net.URI
@@ -17,11 +17,15 @@ class TransposeChordServiceTest {
         val request = TransposeChordsInFileRequest(URI("file://$dir/test.txt"), 3, null)
 
         val response = transposeChordService.transposeFile(request)
-        val responseFile = File(response.resultFile).readLines()
+        val responseFile = File(response.resultFile)
+        assertTrue(responseFile.absolutePath.contains("${System.getProperty("user.home")}/transposed_file"))
 
-        File(URI("file://$dir/expected_result.txt")).readLines().forEach {
-            responseFile.contains(it)
-        }
+        val responseFileContent = responseFile.readLines().iterator()
+        val expectedFileContent = File(URI("file://$dir/expected_result.txt")).readLines().iterator()
+
+        responseFileContent.forEachRemaining{ assertTrue(expectedFileContent.next().trimEnd() == it.trimEnd()) }
+
+        responseFile.delete()
     }
 
     @Test
@@ -30,11 +34,12 @@ class TransposeChordServiceTest {
 
         val response = transposeChordService.transposeFile(request)
         val responseFile = File(response.resultFile)
-        val responseFileLines = responseFile.readLines()
+        assertTrue(responseFile.absolutePath.contains(dir))
 
-        File(URI("file://$dir/expected_result.txt")).readLines().forEach {
-            responseFileLines.contains(it)
-        }
+        val responseFileContent = responseFile.readLines().iterator()
+        val expectedFileContent = File(URI("file://$dir/expected_result.txt")).readLines().iterator()
+
+        responseFileContent.forEachRemaining{ assertTrue(expectedFileContent.next().trimEnd() == it.trimEnd()) }
 
         responseFile.delete()
     }

@@ -1,6 +1,6 @@
 package com.frtelg.chordtransposer.service
 
-import com.frtelg.chordtransposer.dto.enum.MajorChord
+import com.frtelg.chordtransposer.dto.enums.MajorChord
 import com.frtelg.chordtransposer.dto.request.TransposeChordsInFileRequest
 import com.frtelg.chordtransposer.dto.response.TransposeChordsInFileResponse
 import com.frtelg.chordtransposer.dto.response.TransposeSingleChordResponse
@@ -16,7 +16,7 @@ import java.util.*
 @Service
 class TransposeChordService {
     val log = LoggerFactory.getLogger(this.javaClass)
-    val chordRegex: Regex = "([A-G][#b]?(maj|m)?[2-9]?(sus|add|dim)?([1-9][0-9]?)?(/[A-G])?)(\\W|\$)".toRegex()
+    val chordRegex: Regex = "([A-G][#b]?(maj|m)?[2-9]?(sus|add|dim)?([1-9][0-9]?)?(/[A-G])?)".toRegex()
 
     fun transposeSingleChord(string: String, transposeSteps: Int): TransposeSingleChordResponse {
         if (string.contains("\\s".toRegex())) {
@@ -47,7 +47,7 @@ class TransposeChordService {
     }
 
     private fun transposeLine(line: String, steps: Int, writer: BufferedWriter) {
-        if ("^(\\W+)?$chordRegex".toRegex().containsMatchIn(line)) {
+        if ("^(\\W+)?$chordRegex(\\W|\$)".toRegex().containsMatchIn(line)) {
             writer.append(transposeChordsFromString(line, steps))
         } else {
             writer.append(line)
@@ -58,13 +58,10 @@ class TransposeChordService {
 
     private fun transposeChordsFromString(string: String, transposeSteps: Int): String =
             string.replace(chordRegex) { r ->
-                val matchingChord = r.value.replace("[^/#)\\w]".toRegex(), "")
-                val newChord = matchingChord.replace("[A-G][b#]?".toRegex()) { r ->
-                    transposeChord(r.value, transposeSteps).stringValue
+                val matchingChord = r.value
+                matchingChord.replace("[A-G][b#]?".toRegex()) {
+                    transposeChord(it.value, transposeSteps).stringValue
                 }
-
-                if (r.value.contains(" ")) "$newChord "
-                else newChord
             }
 
     private fun transposeChord(chord: String, transposeSteps: Int): MajorChord {
