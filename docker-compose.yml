@@ -1,0 +1,9 @@
+version: '3.5'
+services:
+  testapp:
+    image: frtelg/chordtransposer
+    container_name: chordtransposer
+    environment:
+      - FRANKE=ik
+    ports:
+     - "8080:8080"

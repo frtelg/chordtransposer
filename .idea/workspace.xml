@@ -100,7 +100,16 @@
       <recent name="$PROJECT_DIR$/mount" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TransposeChordServiceTest.testSingleComplexChord">
+  <component name="RunManager" selected="JUnit.All in chordtransposer">
+    <configuration name="All in chordtransposer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="chordtransposer" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BSP.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ChordtransposerApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="chordtransposer" />
       <extension name="coverage">
@@ -181,26 +190,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="docker-compose.yml.testapp: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="testapp" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in chordtransposer" />
         <item itemvalue="JUnit.TransposeChordServiceTest.testSingleComplexChord" />
         <item itemvalue="JUnit.TransposeChordServiceTest.testSingleChordUpperCase" />
         <item itemvalue="JUnit.TransposeChordServiceTest" />
         <item itemvalue="JUnit.ChordtransposerApplicationTests" />
-        <item itemvalue="Docker.docker-compose.yml.testapp: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>

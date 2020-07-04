@@ -94,6 +94,59 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.33.0</version>
+				<executions>
+					<execution>
+						<id>build-image</id>
+						<phase>package</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<verbose>true</verbose>
+					<images>
+						<image>
+							<name>frtelg/chordtransposer</name>
+							<build>
+								<from>adoptopenjdk/openjdk14:ubi</from>
+								<env>
+									<INPUT_FOLDER>/appl/exchange</INPUT_FOLDER>
+									<OUTPUT_FOLDER>/appl/exchange</OUTPUT_FOLDER>
+									<LOG_FOLDER>/var/log</LOG_FOLDER>
+								</env>
+								<assembly>
+									<targetDir>/opt/lib</targetDir>
+								</assembly>
+								<cmd>
+									<shell>java -jar /opt/lib/chordtransposer-0.0.1-SNAPSHOT.jar</shell>
+								</cmd>
+							</build>
+							<run>
+								<ports>
+									<port>8080:8080</port>
+								</ports>
+								<wait>
+									<http>
+										<url>http://localhost:8080/ping</url>
+									</http>
+									<time>10000</time>
+								</wait>
+								<volumes>
+									<bind>
+										<volume>./log:/var/log</volume>
+										<volume>./mount:/appl/exchange</volume>
+									</bind>
+								</volumes>
+							</run>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
