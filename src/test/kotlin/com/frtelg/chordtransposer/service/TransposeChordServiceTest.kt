@@ -3,15 +3,25 @@ package com.frtelg.chordtransposer.service
 import com.frtelg.chordtransposer.dto.request.TransposeChordsInFileRequest
 import com.frtelg.chordtransposer.dto.request.TransposeChordsInTextRequest
 import com.frtelg.chordtransposer.dto.response.TransposeSingleChordResponse
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.ContextConfiguration
+import org.springframework.test.context.TestPropertySource
+import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.io.File
 import java.net.URI
 
+@ExtendWith(SpringExtension::class)
+@ContextConfiguration(classes = [TransposeChordService::class])
+@TestPropertySource(locations = ["classpath:application.properties"])
 class TransposeChordServiceTest {
-    val dir = System.getProperty("user.dir") + "/src/test/resources"
+    private val dir = System.getProperty("user.dir") + "/src/test/resources"
 
-    private val transposeChordService: TransposeChordService = TransposeChordService()
+    @Autowired
+    lateinit var transposeChordService: TransposeChordService
 
     @Test
     fun testTransposeText() {
@@ -74,8 +84,15 @@ class TransposeChordServiceTest {
 
     @Test
     fun testSingleComplexChord() {
-        val response = transposeChordService.transposeSingleChord("Am7add13", 1)
+        val response = transposeChordService.transposeSingleChord("Am7add13/G", 1)
 
-        assertEquals(TransposeSingleChordResponse("Bbm7add13"), response)
+        assertEquals(TransposeSingleChordResponse("Bbm7add13/G#"), response)
+    }
+
+    @Test
+    fun testSingleChordUpperCase() {
+        val response = transposeChordService.transposeSingleChord("AM7ADD13/G", 1)
+
+        assertEquals(TransposeSingleChordResponse("BbM7ADD13/G#"), response)
     }
 }
