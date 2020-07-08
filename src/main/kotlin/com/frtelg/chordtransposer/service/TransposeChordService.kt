@@ -87,10 +87,9 @@ class TransposeChordService constructor(@Value("\${frtelg.chordtransposer.output
     private fun transposeChord(chord: String, transposeSteps: Int): MajorChord {
         val chordEnum = MajorChord.findByName(chord) ?: throw IllegalArgumentException("Non-existing chord: $chord")
         val steps = chordEnum.ordinal + transposeSteps
-        val newChordOrdinal = Math.floorMod(steps, enumValues<MajorChord>().size)
+        val newChordOrdinal = Math.floorMod(steps, enumValues<MajorChord>().size) // use Math.floorMod in order to enable negative modulo as well
 
         return MajorChord.findById(newChordOrdinal)
                 ?: throw IllegalArgumentException("The chord transposer calculated a non-existing new chord. This should never occur, notify the developer!")
     }
-
 }
