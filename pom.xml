@@ -121,6 +121,7 @@
 								</env>
 								<assembly>
 									<targetDir>/opt/lib</targetDir>
+									<descriptorRef>artifact-with-dependencies</descriptorRef>
 								</assembly>
 								<cmd>
 									<shell>java -jar /opt/lib/chordtransposer-0.0.1-SNAPSHOT.jar</shell>
