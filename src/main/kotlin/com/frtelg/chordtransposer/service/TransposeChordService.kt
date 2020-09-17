@@ -20,8 +20,8 @@ import java.util.*
 class TransposeChordService constructor(@Value("\${frtelg.chordtransposer.outputfolder}") val outputDirectory: String) {
     val log = LoggerFactory.getLogger(this.javaClass)
 
-    val chordRegex: Regex = "([A-G][#b]?(?i)(maj|m)?[2-9]?(sus|add|dim)?(?-i)([1-9][0-9]?)?(/[A-G])?)".toRegex()
-    val majorChordRegex: String = "[A-G][b#]?"
+    val majorChordRegex: String = "[A-G][b#♭]?"
+    val chordRegex: Regex = "($majorChordRegex(?i)(maj|m)?[2-9]?(sus|add|dim)?(?-i)([1-9][0-9]?)?(/[A-G][#b])?)".toRegex()
 
     fun transposeSingleChord(string: String, transposeSteps: Int): TransposeSingleChordResponse {
         if (string.contains("\\s".toRegex())) {
@@ -86,10 +86,9 @@ class TransposeChordService constructor(@Value("\${frtelg.chordtransposer.output
 
     private fun transposeChord(chord: String, transposeSteps: Int): MajorChord {
         val chordEnum = MajorChord.findByName(chord) ?: throw IllegalArgumentException("Non-existing chord: $chord")
-        val steps = chordEnum.ordinal + transposeSteps
-        val newChordOrdinal = Math.floorMod(steps, enumValues<MajorChord>().size) // use Math.floorMod in order to enable negative modulo as well
+        val index = chordEnum.ordinal + transposeSteps
 
-        return MajorChord.findById(newChordOrdinal)
+        return MajorChord.findByIndex(index)
                 ?: throw IllegalArgumentException("The chord transposer calculated a non-existing new chord. This should never occur, notify the developer!")
     }
 }

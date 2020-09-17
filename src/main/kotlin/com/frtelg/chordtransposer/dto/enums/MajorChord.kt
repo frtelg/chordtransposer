@@ -1,7 +1,5 @@
 package com.frtelg.chordtransposer.dto.enums
 
-import java.lang.IllegalArgumentException
-
 enum class MajorChord(val stringValue: String) {
     A("A"),
     Bflat("Bb"),
@@ -17,30 +15,25 @@ enum class MajorChord(val stringValue: String) {
     Gsharp("G#");
 
     companion object {
-        private val sharpOrFlatRegex = "(?i)(sharp|flat)".toRegex()
-        private val flat = "FLAT"
-        private val sharp = "SHARP"
+        private val flat = "(?i)(flat|♭|(?-i)b)".toRegex()
+        private val sharp = "(?i)(sharp|#)".toRegex()
 
         fun findByName(name: String): MajorChord? {
-            val refactoredName = if (name.contains(sharpOrFlatRegex)) decorateSharpOrFlat(name)
-                                 else name
+            val isFlat = name.contains(flat)
+            val isSharp = name.contains(sharp)
 
-            return enumValues<MajorChord>().firstOrNull { s ->
-                s.stringValue == refactoredName
+            val closestPureChordIndex = enumValueOf<MajorChord>(name[0].toString()).ordinal
+
+            return when {
+                isFlat -> findByIndex(closestPureChordIndex - 1)
+                isSharp -> findByIndex(closestPureChordIndex + 1)
+                else -> findByIndex(closestPureChordIndex)
             }
         }
 
-        fun findById(id: Int): MajorChord? = enumValues<MajorChord>().firstOrNull { e ->
-            e.ordinal == id
+        fun findByIndex(id: Int): MajorChord? = enumValues<MajorChord>().firstOrNull { e ->
+            e.ordinal == Math.floorMod(id, values().size) // use Math.floorMod in order to enable negative modulo as well)
         }
 
-        private fun decorateSharpOrFlat(string: String): String {
-            val upperCaseString = string.toUpperCase()
-
-            if (upperCaseString == flat) return string.replace(flat, "b")
-            else if (upperCaseString == sharp) return string.replace(sharp, "#")
-
-            throw IllegalArgumentException("Only $flat or $sharp is expected to be decorated")
-        }
     }
 }

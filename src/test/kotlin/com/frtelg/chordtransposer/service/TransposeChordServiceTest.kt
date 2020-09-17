@@ -30,6 +30,8 @@ class TransposeChordServiceTest {
 
         val response = transposeChordService.transposeText(request, 3)
 
+        println(response.transposedText)
+
         val responseContent = response.transposedText.split("\n").iterator()
         val expectedFileContent = File(URI("file://$dir/expected_result.txt")).readLines().iterator()
 
@@ -76,6 +78,20 @@ class TransposeChordServiceTest {
     }
 
     @Test
+    fun singleBChord_isNotConfusedWithFlatSign() {
+        val response = transposeChordService.transposeSingleChord("B", 3)
+
+        assertEquals(TransposeSingleChordResponse("D"), response)
+    }
+
+    @Test
+    fun flatSymbolIsAccepted() {
+        val response = transposeChordService.transposeSingleChord("B♭", 1)
+
+        assertEquals(TransposeSingleChordResponse("B"), response)
+    }
+
+    @Test
     fun testSingleNegative() {
         val response = transposeChordService.transposeSingleChord("A", -2)
 
@@ -87,6 +103,27 @@ class TransposeChordServiceTest {
         val response = transposeChordService.transposeSingleChord("Am7add13/G", 1)
 
         assertEquals(TransposeSingleChordResponse("Bbm7add13/G#"), response)
+    }
+
+    @Test
+    fun testAlternativeChordNameDb() {
+        val response = transposeChordService.transposeSingleChord("Db", 1)
+
+        assertEquals(TransposeSingleChordResponse("D"), response)
+    }
+
+    @Test
+    fun testAlternativeChordNameAb() {
+        val response = transposeChordService.transposeSingleChord("Ab", 1)
+
+        assertEquals(TransposeSingleChordResponse("A"), response)
+    }
+
+    @Test
+    fun testBug() {
+        val response = transposeChordService.transposeSingleChord("Eb/Bb", 1)
+
+        assertEquals(TransposeSingleChordResponse("E/B"), response)
     }
 
     @Test
