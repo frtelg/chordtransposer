@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.frtelg</groupId>
 	<artifactId>chordtransposer</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.3</version>
 	<name>chordtransposer</name>
 	<description>ChordTransposer</description>
 
